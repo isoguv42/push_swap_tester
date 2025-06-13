@@ -29,7 +29,7 @@ TEST_RESULTS=()
 
 # Paths
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_DIR="$(pwd)"
+PROJECT_DIR="$(dirname "$SCRIPT_DIR")"
 PUSH_SWAP="$PROJECT_DIR/push_swap"
 
 
@@ -471,9 +471,12 @@ build_project() {
         cd "$PROJECT_DIR"
         if ! make > /dev/null 2>&1; then
             print_color $RED "❌ Build failed!\n"
+            print_color $RED "Make sure you're running this from a push_swap project directory\n"
+            print_color $RED "or that push_swap executable exists in: $PROJECT_DIR\n"
             exit 1
         fi
         print_color $GREEN "✅ Build successful!\n"
+        cd "$SCRIPT_DIR"  # Return to script directory
     fi
 }
 
